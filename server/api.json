@@ -1,0 +1,53 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "firstName": "John",
+      "lastName": "Doe",
+      "age": 30,
+      "gender": "Male"
+    },
+    {
+      "id": "2",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "age": 25,
+      "gender": "Female"
+    },
+    {
+      "id": "3",
+      "firstName": "Alex",
+      "lastName": "Taylor",
+      "age": 40,
+      "gender": "Non-binary"
+    },
+    {
+      "id": "adf2",
+      "firstName": "Kyle",
+      "lastName": "Lerio",
+      "age": 24,
+      "gender": "Male"
+    },
+    {
+      "id": "da3b",
+      "firstName": "Kim",
+      "lastName": "Lerio",
+      "age": 21,
+      "gender": "male"
+    },
+    {
+      "id": "85bc",
+      "firstName": "Elizabeth",
+      "lastName": "Rivera",
+      "age": 56,
+      "gender": "female"
+    },
+    {
+      "id": "5585",
+      "firstName": "Henry",
+      "lastName": "Lerio",
+      "age": 57,
+      "gender": "male"
+    }
+  ]
+}
