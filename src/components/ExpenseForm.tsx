@@ -1,16 +1,15 @@
 import { InputText } from "primereact/inputtext";
-import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
-import { FormEvent, useState } from "react";
+import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 // import { z } from "zod";
-// import { Message } from "primereact/message";
+import { Controller, FieldValues, useForm } from "react-hook-form";
 
-interface FormData {
-  firstName: string;
-  lastName: string;
-  age: string;
-  gender: string;
-}
+// interface FormData {
+//   firstName: string;
+//   lastName: string;
+//   age: string;
+//   gender: string;
+// }
 
 enum Gender {
   Male = "male",
@@ -30,56 +29,46 @@ const genderOption = [
 // });
 
 const ExpenseForm = () => {
-  const [person, setPerson] = useState<FormData>({
-    firstName: "",
-    lastName: "",
-    age: "",
-    gender: "",
-  });
+  const { register, handleSubmit, control } = useForm();
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    console.log(person);
-  };
+  const onSubmit = (data: FieldValues) => console.log(data);
 
   return (
-    <form className="card flex flex-col gap-3" onSubmit={handleSubmit}>
+    <form
+      className="card flex flex-col gap-3"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="flex flex-col gap-2">
         <label htmlFor="firstName">First Name</label>
         <InputText
           id="firstName"
           type="text"
-          value={person.firstName}
-          onChange={(e) => setPerson({ ...person, firstName: e.target.value })}
+          {...register("firstName")} // equivalent to value & onChange
         />
       </div>
       <div className="flex flex-col gap-2">
         <label htmlFor="lastName">Last Name</label>
-        <InputText
-          id="lastName"
-          type="text"
-          onChange={(e) => setPerson({ ...person, lastName: e.target.value })}
-        />
+        <InputText id="lastName" type="text" {...register("lastName")} />
       </div>
       <div className="flex flex-col gap-2">
         <label htmlFor="age">Age</label>
-        <InputText
-          id="age"
-          type="number"
-          onChange={(e) => setPerson({ ...person, age: e.target.value })}
-        />
+        <InputText id="age" type="number" {...register("age")} />
       </div>
       <div className="flex justify-between items-end">
         <div className="flex flex-col gap-2">
           <label htmlFor="gender">Gender</label>
-          <Dropdown
-            id="gender"
-            value={person.gender}
-            onChange={(e: DropdownChangeEvent) => {
-              setPerson({ ...person, gender: e.value });
-            }}
-            options={genderOption}
-            placeholder="Select"
+          <Controller
+            name="gender"
+            control={control}
+            render={({ field }) => (
+              <Dropdown
+                id="gender"
+                value={field.value}
+                onChange={(e) => field.onChange(e.value)}
+                options={genderOption}
+                placeholder="Select"
+              />
+            )}
           />
         </div>
         <div>
