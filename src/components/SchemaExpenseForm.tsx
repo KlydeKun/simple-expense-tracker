@@ -1,26 +1,20 @@
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, FieldValues, useForm } from "react-hook-form";
+import { Gender, schema } from "../validationSchema";
+import { z } from "zod";
+import ErrorMessage from "./ErrorMessage";
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
-import { Controller, FieldValues, useForm } from "react-hook-form";
-
-interface FormData {
-  firstName: string;
-  lastName: string;
-  age: number;
-  gender: string;
-}
-
-enum Gender {
-  Male = "male",
-  Female = "female",
-}
 
 const genderOption = [
   { label: "Male", value: Gender.Male },
   { label: "Female", value: Gender.Female },
 ];
+
+type FormData = z.infer<typeof schema>;
 
 const ExpenseForm = () => {
   const {
@@ -29,7 +23,9 @@ const ExpenseForm = () => {
     control,
     reset,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
 
   const onSubmit = (data: FieldValues) => {
     console.log(data);
@@ -44,7 +40,7 @@ const ExpenseForm = () => {
       <div className="flex flex-col gap-2">
         <label htmlFor="firstName">First Name</label>
         <IconField>
-          {errors.firstName?.type === "required" && (
+          {errors.firstName && (
             <InputIcon
               className="pi pi-exclamation-circle"
               style={{ color: "red" }}
@@ -53,29 +49,24 @@ const ExpenseForm = () => {
           <InputText
             id="firstName"
             type="text"
-            {...register("firstName", { required: true, minLength: 3 })}
+            {...register("firstName")}
             className={
-              errors.firstName?.type === "required" ||
-              errors.firstName?.type === "minLength"
+              errors.firstName
                 ? "border-red-600 hover:border-red-600 w-full"
                 : "w-full"
             }
           />
         </IconField>
-        {errors.firstName && (
-          <small className="text-red-600">
-            {errors.firstName.type === "required" &&
-              "The first name is required."}
-            {errors.firstName.type === "minLength" &&
-              "The first name must be at least 3 characters."}
-          </small>
-        )}
+        {/* {errors.firstName && (
+          <ErrorMessage>{errors.firstName.message}</ErrorMessage>
+          )} */}
+        <ErrorMessage>{errors.firstName?.message}</ErrorMessage>
       </div>
 
       <div className="flex flex-col gap-2">
         <label htmlFor="lastName">Last Name</label>
         <IconField>
-          {errors.lastName?.type === "required" && (
+          {errors.lastName && (
             <InputIcon
               className="pi pi-exclamation-circle"
               style={{ color: "red" }}
@@ -84,28 +75,24 @@ const ExpenseForm = () => {
           <InputText
             id="lastName"
             type="text"
-            {...register("lastName", { required: true, minLength: 3 })}
+            {...register("lastName")}
             className={
-              errors.lastName?.type === "required" ||
-              errors.lastName?.type === "minLength"
+              errors.lastName
                 ? "border-red-600 hover:border-red-600 w-full"
                 : "w-full"
             }
           />
         </IconField>
-        {errors.lastName && (
-          <small className="text-red-600">
-            {errors.lastName.type === "required" &&
-              "The last name is required."}
-            {errors.lastName.type === "minLength" &&
-              "The last name must be at least 3 characters."}
-          </small>
-        )}
+        {/* {errors.lastName && (
+          <small className="text-red-600">{errors.lastName.message}</small>
+        )} */}
+        <ErrorMessage>{errors.lastName?.message}</ErrorMessage>
       </div>
+
       <div className="flex flex-col gap-2">
         <label htmlFor="age">Age</label>
         <IconField>
-          {errors.age?.type === "required" && (
+          {errors.age && (
             <InputIcon
               className="pi pi-exclamation-circle"
               style={{ color: "red" }}
@@ -113,28 +100,27 @@ const ExpenseForm = () => {
           )}
           <InputText
             id="age"
-            type="number"
+            type="numer"
             {...register("age", {
-              required: true || "Age is required.",
-              maxLength: 2,
-              pattern: /^[1-9]\d*$/,
+              valueAsNumber: true,
             })}
             className={
-              errors.age?.type === "required" ||
-              errors.age?.type === "pattern" ||
-              errors.age?.type === "maxLength"
+              errors.age
                 ? "border-red-600 hover:border-red-600 w-full"
                 : "w-full"
             }
           />
         </IconField>
-        {errors.age && (
-          <small className="text-red-600">
-            {errors.age.type === "required" && "Age is required"}
-            {errors.age.type === "maxLength" && "Invalid Input Age"}
-            {errors.age.type === "pattern" && "Invalid Input Age"}
-          </small>
-        )}
+        {/* <InputText
+          id="age"
+          type="number"
+          {...register("age", { valueAsNumber: true })}
+          className={errors.age ? "border-red-600 hover:border-red-600" : ""}
+        /> */}
+        {/* {errors.age && (
+          <small className="text-red-600">{errors.age.message}</small>
+        )} */}
+        <ErrorMessage>{errors.age?.message}</ErrorMessage>
       </div>
 
       <div className="flex justify-between items-end">
@@ -143,7 +129,6 @@ const ExpenseForm = () => {
           <Controller
             name="gender"
             control={control}
-            rules={{ required: true }}
             render={({ field }) => (
               <Dropdown
                 id="gender"
@@ -152,16 +137,15 @@ const ExpenseForm = () => {
                 options={genderOption}
                 placeholder="Select"
                 className={
-                  errors.gender?.type === "required"
-                    ? "border-red-600 hover:border-red-600"
-                    : ""
+                  errors.gender ? "border-red-600 hover:border-red-600" : ""
                 }
               />
             )}
           />
-          {errors.gender?.type === "required" && (
-            <small className="text-red-600">Gender is required </small>
-          )}
+          {/* {errors.gender && (
+            <small className="text-red-600">{errors.gender.message}</small>
+          )} */}
+          <ErrorMessage>{errors.gender?.message}</ErrorMessage>
         </div>
         <div>
           <Button label="Submit New User" type="submit" />

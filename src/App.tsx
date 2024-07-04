@@ -1,9 +1,11 @@
-import ExpenseForm from "./components/ExpenseForm";
+// import ExpenseForm from "./components/ExpenseForm";
+import SchemaExpenseForm from "./components/SchemaExpenseForm";
 
 function App() {
   return (
     <div>
-      <ExpenseForm />
+      {/* <ExpenseForm /> */}
+      <SchemaExpenseForm />
     </div>
   );
 }
