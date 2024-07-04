@@ -2,12 +2,13 @@ import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, FieldValues, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Gender, schema } from "../validationSchema";
 import { z } from "zod";
 import ErrorMessage from "./ErrorMessage";
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
+import axios from "axios";
 
 const genderOption = [
   { label: "Male", value: Gender.Male },
@@ -27,9 +28,13 @@ const ExpenseForm = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data: FieldValues) => {
-    console.log(data);
-    reset();
+  const onSubmit = async (data: FormData) => {
+    try {
+      await axios.post("http://localhost:3000/users", data);
+      reset();
+    } catch (error) {
+      console.log(error, "Unpected error occured");
+    }
   };
 
   return (
@@ -57,9 +62,6 @@ const ExpenseForm = () => {
             }
           />
         </IconField>
-        {/* {errors.firstName && (
-          <ErrorMessage>{errors.firstName.message}</ErrorMessage>
-          )} */}
         <ErrorMessage>{errors.firstName?.message}</ErrorMessage>
       </div>
 
@@ -83,9 +85,6 @@ const ExpenseForm = () => {
             }
           />
         </IconField>
-        {/* {errors.lastName && (
-          <small className="text-red-600">{errors.lastName.message}</small>
-        )} */}
         <ErrorMessage>{errors.lastName?.message}</ErrorMessage>
       </div>
 
@@ -111,15 +110,6 @@ const ExpenseForm = () => {
             }
           />
         </IconField>
-        {/* <InputText
-          id="age"
-          type="number"
-          {...register("age", { valueAsNumber: true })}
-          className={errors.age ? "border-red-600 hover:border-red-600" : ""}
-        /> */}
-        {/* {errors.age && (
-          <small className="text-red-600">{errors.age.message}</small>
-        )} */}
         <ErrorMessage>{errors.age?.message}</ErrorMessage>
       </div>
 
@@ -142,9 +132,6 @@ const ExpenseForm = () => {
               />
             )}
           />
-          {/* {errors.gender && (
-            <small className="text-red-600">{errors.gender.message}</small>
-          )} */}
           <ErrorMessage>{errors.gender?.message}</ErrorMessage>
         </div>
         <div>
