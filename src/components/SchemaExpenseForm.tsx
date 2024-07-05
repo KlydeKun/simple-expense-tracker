@@ -37,7 +37,7 @@ const ExpenseForm = () => {
       reset();
       showSuccess();
     } catch (error) {
-      console.log(error, "Unpected error occured");
+      showError();
     }
   };
 
@@ -46,6 +46,15 @@ const ExpenseForm = () => {
       severity: "success",
       summary: "Success",
       detail: "Successfully added a New User!",
+      life: 3000,
+    });
+  };
+
+  const showError = () => {
+    toast.current?.show({
+      severity: "error",
+      summary: "Error",
+      detail: "Unexpected error occured!",
       life: 3000,
     });
   };
