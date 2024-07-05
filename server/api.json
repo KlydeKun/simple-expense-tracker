@@ -69,6 +69,13 @@
       "lastName": "Casag",
       "age": 25,
       "gender": "male"
+    },
+    {
+      "id": "ad8a",
+      "firstName": "Alexis Nicole",
+      "lastName": "Gumolon",
+      "age": 24,
+      "gender": "female"
     }
   ]
 }

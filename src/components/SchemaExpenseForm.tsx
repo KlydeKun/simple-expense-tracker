@@ -45,7 +45,7 @@ const ExpenseForm = () => {
     toast.current?.show({
       severity: "success",
       summary: "Success",
-      detail: "Successfully added a New User!",
+      detail: "User Added Successfully!",
       life: 3000,
     });
   };

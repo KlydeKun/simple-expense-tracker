@@ -9,11 +9,11 @@ export const schema = z.object({
   firstName: z
     .string()
     .min(3, "First name must be at least 3 characters.")
-    .max(10),
+    .max(15),
   lastName: z
     .string()
     .min(3, "Last name must be at least 3 characters.")
-    .max(10),
+    .max(15),
   age: z
     .number({ invalid_type_error: "Age field is required." })
     .min(1, "Invalid input age.")
