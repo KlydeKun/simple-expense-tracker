@@ -1,27 +1,6 @@
 {
   "users": [
     {
-      "id": "1",
-      "firstName": "John",
-      "lastName": "Doe",
-      "age": 30,
-      "gender": "Male"
-    },
-    {
-      "id": "2",
-      "firstName": "Jane",
-      "lastName": "Smith",
-      "age": 25,
-      "gender": "Female"
-    },
-    {
-      "id": "3",
-      "firstName": "Alex",
-      "lastName": "Taylor",
-      "age": 40,
-      "gender": "Non-binary"
-    },
-    {
       "id": "adf2",
       "firstName": "Kyle",
       "lastName": "Lerio",
@@ -76,6 +55,34 @@
       "lastName": "Gumolon",
       "age": 24,
       "gender": "female"
+    },
+    {
+      "id": "3eb0",
+      "firstName": "Marben",
+      "lastName": "Acebuche",
+      "age": 25,
+      "gender": "male"
+    },
+    {
+      "id": "82b8",
+      "firstName": "Kobe",
+      "lastName": "Bryant",
+      "age": 35,
+      "gender": "male"
+    },
+    {
+      "id": "f926",
+      "firstName": "qweqwe",
+      "lastName": "qweqwe",
+      "age": 23,
+      "gender": "female"
+    },
+    {
+      "id": "11e7",
+      "firstName": "Kevin",
+      "lastName": "Durant",
+      "age": 38,
+      "gender": "male"
     }
   ]
 }
