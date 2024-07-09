@@ -1,36 +1,30 @@
-import axios from "axios";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { useEffect, useState } from "react";
+import { UserType } from "../App";
 
-interface UserType {
-  id: string;
-  firstName: string;
-  lastName: string;
-  age: number;
-  gender: string;
+interface Props {
+  users: UserType[];
 }
 
-const ExpenseFormList = () => {
-  const [users, setUsers] = useState<UserType[]>([]);
+const ExpenseFormList = ({ users }: Props) => {
+  // const showData = async () => {
+  //   await axios
+  //     .get<UserType[]>("http://localhost:3000/users")
+  //     .then((response) => {
+  //       return setUsers(response.data);
+  //     });
+  // };
 
-  useEffect(() => {
-    const showData = async () => {
-      const response = await axios.get<UserType[]>(
-        "http://localhost:3000/users"
-      );
-      setUsers(response.data);
-    };
-
-    showData();
-  }, []);
+  // useEffect(() => {
+  //   showData();
+  // }, []);
 
   return (
     <div className="card">
       <DataTable
         value={users}
         paginator
-        rows={5}
+        rows={20}
         rowsPerPageOptions={[5, 10, 25, 50]}
         showGridlines
       >

@@ -8,9 +8,6 @@ import { z } from "zod";
 import ErrorMessage from "./ErrorMessage";
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
-import axios from "axios";
-import { useRef } from "react";
-import { Toast } from "primereact/toast";
 
 const genderOption = [
   { label: "Male", value: Gender.Male },
@@ -19,7 +16,11 @@ const genderOption = [
 
 type FormData = z.infer<typeof schema>;
 
-const ExpenseForm = () => {
+interface Props {
+  onSubmit: (data: FormData) => void;
+}
+
+const ExpenseForm = ({ onSubmit }: Props) => {
   const {
     register,
     handleSubmit,
@@ -29,42 +30,17 @@ const ExpenseForm = () => {
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
-  const toast = useRef<Toast>(null);
 
-  const onSubmit = async (data: FormData) => {
-    try {
-      await axios.post("http://localhost:3000/users", data);
-      reset();
-      showSuccess();
-    } catch (error) {
-      showError();
-    }
-  };
-
-  const showSuccess = () => {
-    toast.current?.show({
-      severity: "success",
-      summary: "Success",
-      detail: "User Added Successfully!",
-      life: 3000,
-    });
-  };
-
-  const showError = () => {
-    toast.current?.show({
-      severity: "error",
-      summary: "Error",
-      detail: "Unexpected error occured!",
-      life: 3000,
-    });
+  const resetSubmit = (data: FormData) => {
+    onSubmit(data);
+    reset();
   };
 
   return (
     <div>
-      <Toast ref={toast} />
       <form
         className="card flex flex-col gap-3"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(resetSubmit)}
       >
         <div className="flex flex-col gap-2">
           <label htmlFor="firstName">First Name</label>
@@ -121,7 +97,7 @@ const ExpenseForm = () => {
             )}
             <InputText
               id="age"
-              type="numer"
+              type="number"
               {...register("age", {
                 valueAsNumber: true,
               })}
