@@ -7,26 +7,15 @@ interface Props {
 }
 
 const ExpenseFormList = ({ users }: Props) => {
-  // const showData = async () => {
-  //   await axios
-  //     .get<UserType[]>("http://localhost:3000/users")
-  //     .then((response) => {
-  //       return setUsers(response.data);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   showData();
-  // }, []);
-
   return (
     <div className="card">
       <DataTable
         value={users}
         paginator
-        rows={20}
-        rowsPerPageOptions={[5, 10, 25, 50]}
-        showGridlines
+        rows={5}
+        rowsPerPageOptions={[5, 10, 20]}
+        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport"
+        currentPageReportTemplate="Show {first} - {last} of {totalRecords}"
       >
         <Column field="id" header="ID"></Column>
         <Column field="firstName" header="First Name"></Column>
