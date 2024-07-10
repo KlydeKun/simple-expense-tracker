@@ -64,7 +64,7 @@ function App() {
       <Toast ref={toast} />
       <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-1 lg:space-x-5">
         <SchemaExpenseForm onSubmit={onSubmit} />
-        <ExpenseFormList users={users} />
+        <ExpenseFormList users={users} onSubmit={onSubmit} />
       </div>
     </>
   );
